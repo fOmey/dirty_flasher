@@ -181,7 +181,9 @@ else {
     Write-Host "  ****                                                                                  ****"
     Write-Host "  ****                          You've discovered a new error!                          ****"
     Write-Host "  ****                               Report it on GitHub..                              ****"
-    Write-Host "  ****                                    espResult: $($espResult)                                  ****"
+    if ($espResult -ne $null) {
+        Write-Host "  ****                                    espResult: $($espResult)                                  ****"
+    }
     Write-Host "  ****                                                                                  ****"
     Write-Host "  ******************************************************************************************"
     Write-Host "  ******************************************************************************************"
