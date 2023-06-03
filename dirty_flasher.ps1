@@ -106,7 +106,31 @@ Write-Host "  __                                                                
 Write-Host "  __________________________________________________________________________________________"
 Write-Host ""
 
-. { ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `"endgame\esp32s3_marauder.ino.bootloader.bin`" 0x8000 `"endgame\esp32s3_marauder.ino.partitions.bin`" 0xe000 `"endgame\boot_app0.bin`" 0x10000 `"endgame\esp32s3_marauder.ino.bin`" } 2>&1 |ForEach-Object {"  $_"}
+$boot_app = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^boot_app0\.bin" }
+$bin = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bin" }
+$bootloader = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bootloader\.bin" }
+$partitions = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.partitions\.bin" }
+
+
+if ($boot_app -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
+    . { ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`" } 2>&1 |ForEach-Object {"  $_"}
+}
+elseif ($bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
+    . { ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`" } 2>&1 |ForEach-Object {"  $_"}
+}
+else {
+    Write-Host ""
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ****                                                                                  ****"
+    Write-Host "  ****                         Whoops: Firmware files missing!                          ****"
+    Write-Host "  ****                                                                                  ****"
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ******************************************************************************************"
+    Write-Host ""
+    Pause
+    Exit
+}
 
 $espResult = $LASTEXITCODE
 
@@ -147,6 +171,8 @@ elseif ($espResult -eq 2) {
     Write-Host "  ******************************************************************************************"
     Write-Host "  ******************************************************************************************"
     Write-Host ""
+    Pause
+    Exit
 }
 else {
     Write-Host ""
@@ -160,6 +186,8 @@ else {
     Write-Host "  ******************************************************************************************"
     Write-Host "  ******************************************************************************************"
     Write-Host ""
+    Pause
+    Exit
 }
 
 Read-Host 'Press Enter to exit...'
