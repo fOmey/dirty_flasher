@@ -97,6 +97,10 @@ while ($true) {
 
 $comPort.Close()
 
+while ($comPort.IsOpen) {
+    Start-Sleep -Milliseconds 10
+}
+
 Write-Host ""
 Write-Host "  __________________________________________________________________________________________"
 Write-Host "  __                                                                                      __"
