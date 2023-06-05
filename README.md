@@ -1,5 +1,5 @@
 # dirty_flasher
-Idiot proof flashing tool (hopefully).. we're testing, so I don't have much confidence yet.
+Fool proof flashing tool (hopefully).. we're testing, so I don't have much confidence yet.
 
 I couldnt break it tho? That should say alot.
 
