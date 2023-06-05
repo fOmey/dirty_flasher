@@ -187,7 +187,7 @@ else {
     Write-Host "  ****                          You've discovered a new error!                          ****"
     Write-Host "  ****                               Report it on GitHub..                              ****"
     if ($espResult -ne $null) {
-        Write-Host "  ****                                    espResult: $($espResult)                                  ****"
+        Write-Host "  ****                                    espResult: $($espResult) $(' ' * (33 - ($espResult.ToString().Length))) ****"
     }
     Write-Host "  ****                                                                                  ****"
     Write-Host "  ******************************************************************************************"
