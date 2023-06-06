@@ -67,30 +67,28 @@ Write-Host "  **                                                                
 Write-Host "  ******************************************************************************************"
 Write-Host ""
 
-$comPort = new-Object System.IO.Ports.SerialPort $selectedPort,115200,None,8,one
+$comPort = new-Object System.IO.Ports.SerialPort $selectedPort,115200
 $comPort.Open()
 
 while ($comPort.BytesToRead) {
-    try {
-        $comPort.Read()
+    if ($comPort.IsOpen) {
+        $comPort.ReadExisting()
     }
-    catch {}
 }
 
 while ($true) {
-    try {
-        $line = $comPort.ReadLine()
-        Write-Host "  " $($line)
-        if ($line -match "waiting for download") {
-            break;
+    if ($comPort.IsOpen) {
+        if ($comPort.BytesToRead) {
+            $line = $comPort.ReadLine()
+            Write-Host "  " $($line)
+            if ($line -match "waiting for download") {
+                break;
+            }
         }
 
     }
-    catch {
-        try {
-            $comPort.Open()
-        }
-        catch {}
+    else {
+        $comPort.Open()
     }
 }
 
