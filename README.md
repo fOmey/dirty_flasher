@@ -9,6 +9,9 @@ Flipper Zero:
   * `Baudrate` is set to `Host`
   * `UART pins` set to `13,14`
 
+End Game Module:
+* Slide switch in middle position
+
 Windows PC:
 * Plug flipper zero into PC
 * Right click `dirty_flasher.ps1`
