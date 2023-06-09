@@ -107,6 +107,15 @@ Write-Host "  __                                                                
 Write-Host "  __________________________________________________________________________________________"
 Write-Host ""
 
+Add-Type -Name NativeMethods -Namespace Win32 -MemberDefinition '
+[DllImport("kernel32.dll", SetLastError=true)]
+public static extern bool SetConsoleMode(IntPtr hConsoleHandle, int mode);
+[DllImport("kernel32.dll", SetLastError=true)]
+public static extern IntPtr GetStdHandle(int handle);'
+
+$handle = [Win32.NativeMethods]::GetStdHandle(-10)
+$result = [Win32.NativeMethods]::SetConsoleMode($Handle, 0x0080)
+
 $boot_app = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^boot_app0\.bin" }
 $bin = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bin" }
 $bootloader = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bootloader\.bin" }
