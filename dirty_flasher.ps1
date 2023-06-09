@@ -112,14 +112,13 @@ $bin = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.
 $bootloader = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bootloader\.bin" }
 $partitions = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.partitions\.bin" }
 
-
 if ($boot_app -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
-    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
+    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
 }
 elseif ($bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
-    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
+    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
 }
 else {
     Write-Host ""
