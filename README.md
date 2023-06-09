@@ -6,7 +6,7 @@ I couldnt break it tho? That should say alot.
 # instructions (flipper zero used for flash)
 Flipper Zero:
 * GPIO -> USB-UART Bridge -> Left navigation key
-  * `Baudrate` is set to `115200`
+  * `Baudrate` is set to `host`
   * `UART pins` set to `13,14`
 
 End Game Module:
