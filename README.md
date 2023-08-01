@@ -3,7 +3,7 @@ Fool proof flashing tool (hopefully).. we're testing, so I don't have much confi
 
 I couldnt break it tho? That should say alot.
 
-# instructions (flipper zero used for flash)
+# instructions (end game module ~ flipper zero flash)
 Flipper Zero:
 * GPIO -> USB-UART Bridge -> Left navigation key
   * `Baudrate` is set to `115200`
@@ -17,3 +17,18 @@ Windows PC:
 * Right click `dirty_flasher.ps1`
   * Run with powershell
   * Follow on screen prompts
+
+# instructions (t-display)
+
+Windows PC:
+* Plug T-Display S3 into PC using onboard USB-C port
+* Right click `dirty_flasher.ps1`
+  * Run with powershell
+  * Follow on screen prompts
+
+# notes
+If powershell opens and closes immediately, this is probably caused by the script execution policy.
+
+You can allow all scripts by launching `powershell` as `administrator` and running the following command: `Set-ExecutionPolicy Unrestricted`
+
+For more information visit: [learn.microsoft.com](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3)
