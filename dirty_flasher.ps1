@@ -6,9 +6,48 @@ Write-Host "  **                                       0.1                      
 Write-Host "  **                                                                                      **"
 Write-Host "  ******************************************************************************************"
 
+Write-Host "  **                                                                                      **"
+Write-Host "  **                                      Modules:                                        **"
+Write-Host "  **                                                                                      **"
+Write-Host "  **______________________________________________________________________________________**"
+Write-Host "  **                                                                                      **"
+
+# Module selection
+$modules = @('End Game','T-Display')
+
+$i = 0
+foreach ($module in $modules) {
+	Write-Host "  **  [$i] $($module) $(' ' * (78 - ($module.length))) **"
+	$i++
+}
+
+Write-Host "  **                                                                                      **"
+Write-Host "  ******************************************************************************************"
+Write-Host ""
+
+$userInput = Read-Host -Prompt "  Input the module would you like to flash [0-$($i - 1)]"
+Write-Host ""
+if ($userInput -ge 0 -and $userInput -le $i) {
+    $selectedBoard = $modules[$userInput]
+}
+else {
+    Write-Host ""
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ****                                                                                  ****"
+    Write-Host "  ****                              Whoops: Invalid input!                              ****"
+    Write-Host "  ****                                                                                  ****"
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  ******************************************************************************************"
+    Write-Host ""
+    Pause
+    Exit
+}
+
 # List serial ports
 $ports = Get-PnpDevice -class Ports -status OK | where FriendlyName -like "*COM*"
 
+Write-Host "  ******************************************************************************************"
 Write-Host "  **                                                                                      **"
 Write-Host "  **                                 Detected COM ports:                                  **"
 Write-Host "  **                                                                                      **"
@@ -53,49 +92,51 @@ elseif ($i -eq 0) {
     Exit
 }
 
-Write-Host ""
-Write-Host "  ******************************************************************************************"
-Write-Host "  **                                                                                      **"
-Write-Host "  **                              Enter download mode by:                                 **"
-Write-Host "  **                                                                                      **"
-Write-Host "  **______________________________________________________________________________________**"
-Write-Host "  **                                                                                      **"
-Write-Host "  **  1. Holding down the BOOT button.                                                    **"
-Write-Host "  **  2. While the BOOT button is held, press REBOOT button.                              **"
-Write-Host "  **  3. Release the BOOT button.                                                         **"
-Write-Host "  **                                                                                      **"
-Write-Host "  ******************************************************************************************"
-Write-Host ""
+if ($selectedBoard -eq "End Game") {
+    Write-Host ""
+    Write-Host "  ******************************************************************************************"
+    Write-Host "  **                                                                                      **"
+    Write-Host "  **                              Enter download mode by:                                 **"
+    Write-Host "  **                                                                                      **"
+    Write-Host "  **______________________________________________________________________________________**"
+    Write-Host "  **                                                                                      **"
+    Write-Host "  **  1. Holding down the BOOT button.                                                    **"
+    Write-Host "  **  2. While the BOOT button is held, press REBOOT button.                              **"
+    Write-Host "  **  3. Release the BOOT button.                                                         **"
+    Write-Host "  **                                                                                      **"
+    Write-Host "  ******************************************************************************************"
+    Write-Host ""
 
-$comPort = new-Object System.IO.Ports.SerialPort $selectedPort,115200
-$comPort.Open()
+    $comPort = new-Object System.IO.Ports.SerialPort $selectedPort,115200
+    $comPort.Open()
 
-while ($comPort.BytesToRead) {
-    if ($comPort.IsOpen) {
-        $comPort.ReadExisting()
-    }
-}
-
-while ($true) {
-    if ($comPort.IsOpen) {
-        if ($comPort.BytesToRead) {
-            $line = $comPort.ReadLine()
-            Write-Host $($line)
-            if ($line -match "waiting for download") {
-                break;
-            }
+    while ($comPort.BytesToRead) {
+        if ($comPort.IsOpen) {
+            $comPort.ReadExisting()
         }
-
     }
-    else {
-        $comPort.Open()
+
+    while ($true) {
+        if ($comPort.IsOpen) {
+            if ($comPort.BytesToRead) {
+                $line = $comPort.ReadLine()
+                Write-Host $($line)
+                if ($line -match "waiting for download") {
+                    break;
+                }
+            }
+    
+        }
+        else {
+            $comPort.Open()
+        }
     }
-}
 
-$comPort.Close()
+    $comPort.Close()
 
-while ($comPort.IsOpen) {
-    Start-Sleep -Milliseconds 10
+    while ($comPort.IsOpen) {
+        Start-Sleep -Milliseconds 10
+    }
 }
 
 Write-Host ""
@@ -116,18 +157,35 @@ public static extern IntPtr GetStdHandle(int handle);'
 $handle = [Win32.NativeMethods]::GetStdHandle(-10)
 $result = [Win32.NativeMethods]::SetConsoleMode($Handle, 0x0080)
 
-$boot_app = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^boot_app0\.bin" }
-$bin = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bin" }
-$bootloader = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.bootloader\.bin" }
-$partitions = Get-ChildItem -Path .\firmware\* -Name | Where-Object { $_ -match "^\w+\.ino\.partitions\.bin" }
 
-if ($boot_app -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
+if ($selectedBoard -eq "End Game") {
+    $firmwareDir = ".\endgame"
+}
+if ($selectedBoard -eq "T-Display") {
+    $firmwareDir = ".\tdisplay"
+}
+$bootApp = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^boot_app0\.bin" }
+$bin = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^\w+\.ino\.bin" }
+$bootloader = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^\w+\.ino\.bootloader\.bin" }
+$partitions = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^\w+\.ino\.partitions\.bin" }
+
+if ($bootApp -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
-    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
+    if ($selectedBoard -eq "End Game") {
+        ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0xe000 `"$($firmwareDir)\$($bootApp)`" 0x10000 `"$($firmwareDir)\$($bin)`"
+    }
+    elseif ($selectedBoard -eq "T-Display") {
+        ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 16MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0xe000 `"$($firmwareDir)\$($bootApp)`" 0x10000 `"$($firmwareDir)\$($bin)`"
+    }
 }
 elseif ($bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
-    ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
+    if ($selectedBoard -eq "End Game") {
+        ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0x10000 `"$($firmwareDir)\$($bin)`"
+    }
+    elseif ($selectedBoard -eq "T-Display") {
+        ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size 16MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0x10000 `"$($firmwareDir)\$($bin)`"
+    }
 }
 else {
     Write-Host ""
@@ -158,6 +216,7 @@ if ($espResult -eq 0) {
     
     $consoleHWND = [Console.Window]::GetConsoleWindow();
     $result = [Console.Window]::SetWindowPos($consoleHWND, -1, 0, 0, 0, 0, 0x0001);
+    $result = [Console.Window]::SetWindowPos($consoleHWND, -1, 0, 0, 0, 0, 0x0041);
     
     Write-Host ""
     
