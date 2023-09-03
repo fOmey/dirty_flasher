@@ -2,7 +2,7 @@
 Write-Host "  ******************************************************************************************"
 Write-Host "  **                                                                                      **"
 Write-Host "  **                                   Dirty Flasher                                      **"
-Write-Host "  **                                       0.1                                            **"
+Write-Host "  **                                       0.2                                            **"
 Write-Host "  **                                                                                      **"
 Write-Host "  ******************************************************************************************"
 
@@ -13,7 +13,7 @@ Write-Host "  **________________________________________________________________
 Write-Host "  **                                                                                      **"
 
 # Module selection
-$modules = @('End Game','T-Display')
+$modules = @('End Game','T-Display', 'Game Over')
 
 $i = 0
 foreach ($module in $modules) {
@@ -92,7 +92,7 @@ elseif ($i -eq 0) {
     Exit
 }
 
-if ($selectedBoard -eq "End Game") {
+if (($selectedBoard -eq "End Game") -or ($selectedBoard -eq "Game Over")) {
     Write-Host ""
     Write-Host "  ******************************************************************************************"
     Write-Host "  **                                                                                      **"
@@ -161,8 +161,11 @@ $result = [Win32.NativeMethods]::SetConsoleMode($Handle, 0x0080)
 if ($selectedBoard -eq "End Game") {
     $firmwareDir = ".\endgame"
 }
-if ($selectedBoard -eq "T-Display") {
+elseif ($selectedBoard -eq "T-Display") {
     $firmwareDir = ".\tdisplay"
+}
+elseif ($selectedBoard -eq "Game Over") {
+    $firmwareDir = ".\gameover"
 }
 $bootApp = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^boot_app0\.bin" }
 $bin = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ -match "^\w+\.ino\.bin" }
@@ -171,7 +174,7 @@ $partitions = Get-ChildItem -Path "$($firmwareDir)\*" -Name | Where-Object { $_ 
 
 if ($bootApp -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0xe000 `".\firmware\$($boot_app)`" 0x10000 `".\firmware\$($bin)`"
-    if ($selectedBoard -eq "End Game") {
+    if (($selectedBoard -eq "End Game") -or ($selectedBoard -eq "Game Over")) {
         ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0xe000 `"$($firmwareDir)\$($bootApp)`" 0x10000 `"$($firmwareDir)\$($bin)`"
     }
     elseif ($selectedBoard -eq "T-Display") {
@@ -180,7 +183,7 @@ if ($bootApp -ne $null -and $bin -ne $null -and $bootloader -ne $null -and $part
 }
 elseif ($bin -ne $null -and $bootloader -ne $null -and $partitions -ne $null) {
     #./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 --before default_reset --after hard_reset write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `".\firmware\$($bootloader)`" 0x8000 `".\firmware\$($partitions)`" 0x10000 `".\firmware\$($bin)`"
-    if ($selectedBoard -eq "End Game") {
+    if (($selectedBoard -eq "End Game") -or ($selectedBoard -eq "Game Over")) {
         ./esptool.exe --chip esp32s3 --port `"$($selectedPort)`" --baud 115200 write_flash -e -z --flash_mode dio --flash_freq 80m --flash_size 8MB 0x0 `"$($firmwareDir)\$($bootloader)`" 0x8000 `"$($firmwareDir)\$($partitions)`" 0x10000 `"$($firmwareDir)\$($bin)`"
     }
     elseif ($selectedBoard -eq "T-Display") {
@@ -227,6 +230,9 @@ if ($espResult -eq 0) {
     Write-Host "  ________________________________________________________________________________________________________________________________________________________________"
     Write-Host "  __                                                                                                                                                            __"
     Write-Host "  __                                                            HOPE YOU ENJOYED THE VIEW, IT'S SAFE TO EXIT                                                    __"
+    Write-Host "  __                                                            HIT THE `"REBOOT`" BUTTON TO BOOT INTO THE OS                                                   __"
+    Write-Host "  __                                                         THE INITIAL BOOT AFTER A FLASH BEING SLOW IS NORMAL                                                __"
+    Write-Host "  __                                                               YOUR BOARD IS DOING SOME HOUSE KEEPING                                                       __"
     Write-Host "  __                                                                                                                                                            __"
     Write-Host "  ________________________________________________________________________________________________________________________________________________________________"
     Write-Host ""
