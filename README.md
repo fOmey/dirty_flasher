@@ -3,7 +3,7 @@ Fool proof flashing tool (hopefully).. we're testing, so I don't have much confi
 
 I couldnt break it tho? That should say alot.
 
-# instructions (end game module ~ flipper zero flash)
+# instructions (end game / game over module ~ flipper zero flash)
 Flipper Zero:
 * GPIO -> USB-UART Bridge -> Left navigation key
   * `Baudrate` is set to `115200`
