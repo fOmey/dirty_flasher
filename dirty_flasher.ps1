@@ -67,13 +67,13 @@ Write-Host ""
 $selectedPort = "COM0"
 if ($i -gt 1) {
 	$userInput = Read-Host -Prompt "  Input the COM port you would like to use [0-$($i - 1)]"
-	if ($ports[$userInput].FriendlyName -match "COM[0-9+]") {
+	if ($ports[$userInput].FriendlyName -match "COM[0-9]+") {
         $selectedPort = $matches[0]
 		#Write-Host "Selected port: $($matches[0])"
 	}
 }
 elseif ($i -eq 1) {
-    if ($ports[0].FriendlyName -match "COM[0-9+]") {
+    if ($ports[0].FriendlyName -match "COM[0-9]+") {
         $selectedPort = $matches[0]
         #Write-Host "Defaulting to port: $($matches[0])"
     }
