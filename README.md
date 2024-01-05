@@ -32,3 +32,7 @@ If powershell opens and closes immediately, this is probably caused by the scrip
 You can allow all scripts by launching `powershell` as `administrator` and running the following command: `Set-ExecutionPolicy Unrestricted`
 
 For more information visit: [learn.microsoft.com](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3)
+
+# gps module pinout diagram (game over)
+
+![Game Over](https://github.com/fOmey/dirty_flasher/blob/main/img/GameOverGPS.jpg?raw=true)
