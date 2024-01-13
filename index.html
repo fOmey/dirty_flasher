@@ -75,10 +75,10 @@
         color: #03a9f4;
       }
       .screenshot {
-        text-align: center;
+        text-align: left;
       }
       .screenshot img {
-        max-width: 100%;
+        max-width: 40%;
         box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
           rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
         border-radius: 4px;
@@ -87,13 +87,6 @@
         margin-top: 4px;
         display: block;
       }
-      .videoWrapper {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 */
-        height: 0;
-        margin-bottom: 25px;
-        background: #ccc;
-      }
       .hidden {
         display: none;
       }
@@ -101,16 +94,6 @@
         display: block;
         padding-left: 8px;
         overflow-y: scroll;
-      }
-      .footer {
-        margin-top: 24px;
-        border-top: 1px solid #ccc;
-        padding-top: 24px;
-        text-align: center;
-      }
-      .footer .initiative {
-        font-style: italic;
-        margin-top: 16px;
       }
       table {
         border-spacing: 0;
@@ -149,19 +132,46 @@
         <li>End Game</li>
         <li>T-Display</li>
       </ul>
-
-      <h2 id="ready">Ready to flash?</h2>
       <p>
-        This will flash your device to the latest update. To get started, connect your device to your computer and hit the button:
+        This will flash your device to the latest update. To get started, connect your device to your computer and hit one of the CONNECT buttons:
       </p>
-      <esp-web-install-button manifest="/dirty_flasher/manifest.json">
+
+      <h2 id="game_over">Game Over:</h2>
+      <div class="screenshot">
+        <img src="/dirty_flasher/img/GameOver.jpg">
+      </div>
+      <esp-web-install-button manifest="/dirty_flasher/gameover/gameover.json">
         <i slot="unsupported">
           The demo is not available because your browser does not support Web
           Serial. Open this page in Google Chrome or Microsoft Edge instead
           <span class="not-supported-i hidden">(but not on your iOS device)</span>.
         </i>
       </esp-web-install-button>
+
+      <h2 id="end_game">End Game:</h2>
+      <div class="screenshot">
+        <img src="/dirty_flasher/img/EndGame.jpg">
+      </div>
+      <esp-web-install-button manifest="/dirty_flasher/endgame/endgame.json">
+        <i slot="unsupported">
+          The demo is not available because your browser does not support Web
+          Serial. Open this page in Google Chrome or Microsoft Edge instead
+          <span class="not-supported-i hidden">(but not on your iOS device)</span>.
+        </i>
+      </esp-web-install-button>
+
+    <h2 id="end_game">T-Display:</h2>
+    <div class="screenshot">
+      <img src="/dirty_flasher/img/TDisplay.jpg">
     </div>
+    <esp-web-install-button manifest="/dirty_flasher/tdisplay/tdisplay.json">
+      <i slot="unsupported">
+        The demo is not available because your browser does not support Web
+        Serial. Open this page in Google Chrome or Microsoft Edge instead
+        <span class="not-supported-i hidden">(but not on your iOS device)</span>.
+      </i>
+    </esp-web-install-button>
+  </div>
     <script>
       if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
         document.querySelector(".not-supported-i").classList.remove("hidden");
