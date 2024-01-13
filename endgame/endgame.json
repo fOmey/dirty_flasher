@@ -1,0 +1,15 @@
+{
+    "name": "End Game",
+    "version": "0.13.6",
+    "builds": [
+        {
+            "chipFamily": "ESP32-S3",
+            "parts": [
+                {
+                    "path": "/dirty_flasher/gameover/gameover_firmware.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}

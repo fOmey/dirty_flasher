@@ -1,0 +1,15 @@
+{
+    "name": "T-Display",
+    "version": "0.13.6",
+    "builds": [
+        {
+            "chipFamily": "ESP32-S3",
+            "parts": [
+                {
+                    "path": "/dirty_flasher/tdisplay/tdisplay_firmware.bin",
+                    "offset": 0
+                }
+            ]
+        }
+    ]
+}
