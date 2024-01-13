@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>ESP Web Tools</title>
+    <meta
+      name="description"
+      content="Easily allow users to flash new firmware for their ESP-devices on the web."
+    />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta property="og:title" content="ESP Web Tools" />
+    <meta property="og:site_name" content="ESP Web Tools" />
+    <meta
+      property="og:url"
+      content="https://esphome.github.io/esp-web-tools/"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Easily allow users to flash new firmware for their ESP-devices on the web."
+    />
+    <meta
+      property="og:image"
+      content="https://esphome.github.io/esp-web-tools/static/social.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ESP Web Tools" />
+    <meta
+      name="twitter:description"
+      content="Easily allow users to flash new firmware for their ESP-devices on the web."
+    />
+    <meta
+      name="twitter:image"
+      content="https://esphome.github.io/esp-web-tools/static/social.png"
+    />
+    <meta name="color-scheme" content="dark light" />
+    <style>
+      body {
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Ubuntu, sans-serif;
+        padding: 0;
+        margin: 0;
+        line-height: 1.4;
+      }
+      .content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 12px;
+      }
+      h2 {
+        margin-top: 2em;
+      }
+      h3 {
+        margin-top: 1.5em;
+      }
+      .projects {
+        display: flex;
+        text-align: center;
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
+      }
+      .projects a {
+        color: initial;
+        text-decoration: none;
+      }
+      .project .logo img {
+        height: 50px;
+      }
+      .project .name {
+        margin-top: 8px;
+      }
+      a {
+        color: #03a9f4;
+      }
+      .screenshot {
+        text-align: center;
+      }
+      .screenshot img {
+        max-width: 100%;
+        box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+          rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+        border-radius: 4px;
+      }
+      .screenshot i {
+        margin-top: 4px;
+        display: block;
+      }
+      .videoWrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+        margin-bottom: 25px;
+        background: #ccc;
+      }
+      .hidden {
+        display: none;
+      }
+      .content pre {
+        display: block;
+        padding-left: 8px;
+        overflow-y: scroll;
+      }
+      .footer {
+        margin-top: 24px;
+        border-top: 1px solid #ccc;
+        padding-top: 24px;
+        text-align: center;
+      }
+      .footer .initiative {
+        font-style: italic;
+        margin-top: 16px;
+      }
+      table {
+        border-spacing: 0;
+      }
+      td {
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #333;
+          color: #fff;
+        }
+        a {
+          color: #58a6ff;
+        }
+      }
+    </style>
+    <script module>
+      import(
+        // In development we import locally.
+        window.location.hostname === "localhost"
+          ? "/dist/web/install-button.js"
+          : "https://unpkg.com/esp-web-tools/dist/web/install-button.js?module"
+      );
+    </script>
+  </head>
+  <body>
+    <div class="content">
+      <h1>ESP Web Tools</h1>
+      <p>
+        User friendly tool configured to update section80 devices:
+      </p>
+      <ul>
+        <li>Game Over</li>
+        <li>End Game</li>
+        <li>T-Display</li>
+      </ul>
+
+      <h2 id="ready">Ready to flash?</h2>
+      <p>
+        This will flash your device to the latest update. To get started, connect your device to your computer and hit the button:
+      </p>
+      <esp-web-install-button manifest="/dirty_flasher/manifest.json">
+        <i slot="unsupported">
+          The demo is not available because your browser does not support Web
+          Serial. Open this page in Google Chrome or Microsoft Edge instead
+          <span class="not-supported-i hidden">(but not on your iOS device)</span>.
+        </i>
+      </esp-web-install-button>
+    </div>
+    <script>
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        document.querySelector(".not-supported-i").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
