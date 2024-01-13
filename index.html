@@ -2,38 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>ESP Web Tools</title>
-    <meta
-      name="description"
-      content="Easily allow users to flash new firmware for their ESP-devices on the web."
-    />
-    <meta name="viewport" content="width=device-width" />
-
-    <meta property="og:title" content="ESP Web Tools" />
-    <meta property="og:site_name" content="ESP Web Tools" />
-    <meta
-      property="og:url"
-      content="https://esphome.github.io/esp-web-tools/"
-    />
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:description"
-      content="Easily allow users to flash new firmware for their ESP-devices on the web."
-    />
-    <meta
-      property="og:image"
-      content="https://esphome.github.io/esp-web-tools/static/social.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ESP Web Tools" />
-    <meta
-      name="twitter:description"
-      content="Easily allow users to flash new firmware for their ESP-devices on the web."
-    />
-    <meta
-      name="twitter:image"
-      content="https://esphome.github.io/esp-web-tools/static/social.png"
-    />
+    <title>dirty_flasher</title>
     <meta name="color-scheme" content="dark light" />
     <style>
       body {
@@ -53,23 +22,6 @@
       }
       h3 {
         margin-top: 1.5em;
-      }
-      .projects {
-        display: flex;
-        text-align: center;
-        flex-wrap: wrap;
-        gap: 24px;
-        justify-content: center;
-      }
-      .projects a {
-        color: initial;
-        text-decoration: none;
-      }
-      .project .logo img {
-        height: 50px;
-      }
-      .project .name {
-        margin-top: 8px;
       }
       a {
         color: #03a9f4;
@@ -112,20 +64,13 @@
         }
       }
     </style>
-    <script module>
-      import(
-        // In development we import locally.
-        window.location.hostname === "localhost"
-          ? "/dist/web/install-button.js"
-          : "https://unpkg.com/esp-web-tools/dist/web/install-button.js?module"
-      );
-    </script>
+    <script type="module" src="https://unpkg.com/esp-web-tools@9/dist/web/install-button.js?module"></script>
   </head>
   <body>
     <div class="content">
-      <h1>ESP Web Tools</h1>
+      <h1>dirty_flasher</h1>
       <p>
-        User friendly tool configured to update section80 devices:
+        User friendly web flashing tool used to update section80 devices:
       </p>
       <ul>
         <li>Game Over</li>
