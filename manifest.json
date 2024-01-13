@@ -6,16 +6,8 @@
             "chipFamily": "ESP32-S3",
             "parts": [
                 {
-                    "path": "/dirty_flasher/gameover/esp32s3_marauder.ino.bootloader.bin",
+                    "path": "/dirty_flasher/gameover/gameover_firmware.bin",
                     "offset": 0
-                },
-                {
-                    "path": "/dirty_flasher/gameover/esp32s3_marauder.ino.partitions.bin",
-                    "offset": 32768
-                },
-                {
-                    "path": "/dirty_flasher/gameover/esp32s3_marauder.ino.bin",
-                    "offset": 65536
                 }
             ]
         }
