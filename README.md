@@ -3,6 +3,9 @@ Fool proof flashing tool (hopefully).. we're testing, so I don't have much confi
 
 I couldnt break it tho? That should say alot.
 
+# web browser flasher ~ esp web tool
+[fomey.github.io/dirty_flasher](https://fomey.github.io/dirty_flasher/)
+
 # instructions (end game / game over module ~ flipper zero flash)
 Flipper Zero:
 * GPIO -> USB-UART Bridge -> Left navigation key
