@@ -1,6 +1,6 @@
 {
     "name": "T-Display",
-    "version": "0.13.6",
+    "version": "0.13.7",
     "builds": [
         {
             "chipFamily": "ESP32-S3",
