@@ -6,7 +6,7 @@
             "chipFamily": "ESP32-S3",
             "parts": [
                 {
-                    "path": "/dirty_flasher/gameover/gameover_firmware.bin",
+                    "path": "/dirty_flasher/endgame/endgame_firmware.bin",
                     "offset": 0
                 }
             ]
