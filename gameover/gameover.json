@@ -1,6 +1,6 @@
 {
     "name": "Game Over",
-    "version": "0.13.7",
+    "version": "0.13.8",
     "builds": [
         {
             "chipFamily": "ESP32-S3",
