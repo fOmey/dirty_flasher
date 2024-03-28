@@ -36,6 +36,10 @@ You can allow all scripts by launching `powershell` as `administrator` and runni
 
 For more information visit: [learn.microsoft.com](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3)
 
-# gps module pinout diagram (game over)
+# game over - gps module pinout diagram
 
 ![Game Over](https://github.com/fOmey/dirty_flasher/blob/main/img/GameOverGPS.jpg?raw=true)
+
+# end game - gps module pinout diagram
+
+![End Game](https://github.com/fOmey/dirty_flasher/blob/main/img/EndGameGPS.jpg?raw=true)
