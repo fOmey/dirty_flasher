@@ -3,10 +3,17 @@ Fool proof flashing tool (hopefully).. we're testing, so I don't have much confi
 
 I couldnt break it tho? That should say alot.
 
-# web browser flasher ~ esp web tool (recommended method!)
+# web browser flasher ~ esp web tool
 [fomey.github.io/dirty_flasher](https://fomey.github.io/dirty_flasher/)
 
-# instructions (end game / game over module ~ flipper zero flash)
+> [!NOTE]
+> The web browser flasher is the recommended flashing method 👌
+
+<details>
+<summary>Powershell script instructions (legacy flashing method)</summary>
+ 
+# instructions (end game / game over module ~ powershell script)
+
 Flipper Zero:
 * GPIO -> USB-UART Bridge -> Left navigation key
   * `Baudrate` is set to `115200`
@@ -35,6 +42,7 @@ If powershell opens and closes immediately, this is probably caused by the scrip
 You can allow all scripts by launching `powershell` as `administrator` and running the following command: `Set-ExecutionPolicy Unrestricted`
 
 For more information visit: [learn.microsoft.com](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.3)
+</details>
 
 # game over - gps module pinout diagram
 
