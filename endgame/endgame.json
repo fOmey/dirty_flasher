@@ -1,6 +1,6 @@
 {
     "name": "End Game",
-    "version": "1.4.3",
+    "version": "1.4.6",
     "builds": [
         {
             "chipFamily": "ESP32-S3",
